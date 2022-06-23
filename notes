@@ -1,0 +1,15 @@
+#for getting the titles
+
+cat news.txt | grep '</a> </td>' | cut -d '>' -f 2 | sed 's/<\/a//g' | tr -d '&$%#;' | wc -l
+
+
+cat news.txt | grep '</a> </td>' | cut -d '>' -f 2 | sed 's/<\/a//g' | sed 's/&#039;//g'
+
+
+#for getting links 
+
+cat news.txt | grep '</a> </td>' | cut -d '>' -f 1 | cut -d '"' -f 2 | awk "NR==1"
+
+#for getting the news inside a line
+
+cat news2 | grep "<p>" | perl -ne 'if(/<p>(.*?)<\/p>/){print "$1\t$2\n"}' | sed 's/<strong>//g' | sed 's/<\/strong>//g'
