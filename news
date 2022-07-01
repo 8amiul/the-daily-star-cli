@@ -11,4 +11,4 @@ link="$(printf "$paste_\n" | grep "$select" | perl -pe 's/.*[ \t]//')"
 curl__=$(curl -s "https://www.thedailystar.net$link")
 echo "$curl__" | grep "\<h1\>" > $final
 echo "$curl__" | grep "<p>" | perl -ne 'if(/<p>(.*?)<\/p>/){print "$1\t$2\n"}' | sed -e 's/^/<p>/g' -e 's/$/<\/p>/g' >> $final
-w3m $final && rm $final
+st -e w3m $final && rm $final
