@@ -1,18 +1,14 @@
 #!/bin/bash
-webtag="https://www.thedailystar.net"
-cache="/tmp/news.cache"
-cache2="/tmp/news.cache2"
-echo "The Daily Star-CLI"
-curl "https://www.thedailystar.net/todays-news" > $cache && clear
-title="$(cat $cache | grep '</a> </td>' | cut -d '>' -f 2 | sed 's/<\/a//g' | sed 's/&#039;//g' | dmenu)"
-link="$(cat $cache | grep -i "$title" | cut -d '>' -f 1 | cut -d '"' -f 2)"
-curl "$webtag$link" > $cache2 && clear
-rm $cache
-final="$(cat $cache2 | grep "<p>" | perl -ne 'if(/<p>(.*?)<\/p>/){print "$1\t$2\n"}' | sed 's/<strong>//g' | sed 's/<\/strong>//g')"
-#echo $final | tr . \\n | sed 's/$/./' | sed 's/^ //g' | head -n -1 > $cache
-echo $final > $cache
-less $cache
-#cat $cache
-#echo $final
-#w3m $cache
-rm $cache $cache2
+#   The_Daily_Start-CLi
+#   Version 2.0
+final="/tmp/.page.html"
+curl_=$(curl -s "https://www.thedailystar.net/todays-news")
+var1="$(echo "$curl_"| grep "<\/td>" | grep "<a href=" | cut -d '"' -f3 | sed 's/<\/a>//g' | sed 's/<\/td>//g' | sed 's/>//g' | sed 's/\&\#039//g' | sed 's/\&quot\;//g')"
+var2="$(echo "$curl_"| grep "<\/td>" | grep "<a href=" | cut -d '"' -f2)"
+paste_=$(paste <(printf "$var1\n") <(printf "$var2\n"))
+select="$(printf "$var1\n" | dmenu)"
+link="$(printf "$paste_\n" | grep "$select" | perl -pe 's/.*[ \t]//')"
+curl__=$(curl -s "https://www.thedailystar.net$link")
+echo "$curl__" | grep "\<h1\>" > $final
+echo "$curl__" | grep "<p>" | perl -ne 'if(/<p>(.*?)<\/p>/){print "$1\t$2\n"}' | sed -e 's/^/<p>/g' -e 's/$/<\/p>/g' >> $final
+w3m $final && rm $final
