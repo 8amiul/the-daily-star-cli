@@ -5,9 +5,9 @@ final="/tmp/.page.html"
 curl_=$(curl -s "https://www.thedailystar.net/todays-news")
 var1="$(echo "$curl_"| grep "<\/td>" | grep "<a href=" | cut -d '"' -f3 | sed 's/<\/a>//g' | sed 's/<\/td>//g' | sed 's/>//g' | sed 's/\&\#039//g' | sed 's/\&quot\;//g')"
 var2="$(echo "$curl_"| grep "<\/td>" | grep "<a href=" | cut -d '"' -f2)"
-paste_=$(paste <(printf "$var1\n") <(printf "$var2\n"))
-select="$(printf "$var1\n" | dmenu)"
-link="$(printf "$paste_\n" | grep "$select" | perl -pe 's/.*[ \t]//')"
+paste_=$(paste <(echo "$var1") <(echo "$var2"))
+select="$(echo "$var1" | dmenu)"
+link="$(echo "$paste_" | grep "$select" | perl -pe 's/.*[ \t]//')"
 curl__=$(curl -s "https://www.thedailystar.net$link")
 echo "$curl__" | grep "\<h1\>" > $final
 echo "$curl__" | grep "<p>" | perl -ne 'if(/<p>(.*?)<\/p>/){print "$1\t$2\n"}' | sed -e 's/^/<p>/g' -e 's/$/<\/p>/g' >> $final
