@@ -13,7 +13,7 @@ A tool to get daily news from [The Daily Star.](https://www.thedailystar.net/)
 
 ### Installation 
 ```sh
-$ sudo curl -sL "https://raw.githubusercontent.com/8amiulyt/the-daily-star-cli/main/news" -o /usr/local/bin/news
+$ sudo curl -sL "https://raw.githubusercontent.com/8amiul/the-daily-star-cli/main/news" -o /usr/local/bin/news
 $ sudo chmod +x /usr/local/bin/news
 ```
 
