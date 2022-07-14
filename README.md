@@ -2,9 +2,8 @@
 <p align="center"> 
 <img src="/X_/x.webp" alt="Video Preview" width="500px">
 </p>
-<p align="center">
-A tool to get daily news from [The Daily Star.](https://www.thedailystar.net/)
-</p>
+
+A tool to get daily news from [The Daily star](https://www.thedailystar.net).
 
 ### Requirements
 * Dmenu
